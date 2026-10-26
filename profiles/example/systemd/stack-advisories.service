@@ -1,0 +1,17 @@
+# Daily security advisories check: inventory only, notifies critical advisories, never applies.
+[Unit]
+Description=stack-updater daily security advisories (read-only, notify critical)
+Documentation=file:///opt/server-update-agent/README.md
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+Environment=STACK_UPDATER_MODE_FILE=/var/lib/stack-updater/config/mode
+ExecStart=/opt/server-update-agent/bin/stack-update advisories --profile /opt/server-update-agent/profiles/example --notify --quiet
+Nice=10
+IOSchedulingClass=idle
+TimeoutStartSec=30min
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=stack-advisories

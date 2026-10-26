@@ -1,0 +1,13 @@
+# Daily 06:00 UTC. Persistent=false: no catch-up run at boot.
+[Unit]
+Description=stack-updater daily security advisories, 06:00 UTC
+
+[Timer]
+OnCalendar=*-*-* 06:00:00 UTC
+Persistent=false
+RandomizedDelaySec=0
+AccuracySec=1min
+Unit=stack-advisories.service
+
+[Install]
+WantedBy=timers.target

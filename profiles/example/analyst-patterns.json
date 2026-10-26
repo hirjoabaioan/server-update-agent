@@ -1,0 +1,78 @@
+{
+  "$comment": "Per-library usage patterns (grep -E) for the impact analyst. Keys are the options/methods/events the platform really uses; they are intersected with removed/deprecated/renamed lines of the library changelog. 'php.extensions' lists extension function families whose presence must be checked against the target PHP binary.",
+  "php": {
+    "extensions": {
+      "imap": { "pattern": "\\bimap_[a-z0-9_]+", "note": "ext-imap left PHP core in 8.4 (PECL)" }
+    }
+  },
+  "libraries": {
+    "intl-tel-input": {
+      "aliases": ["intltelinput"],
+      "patterns": {
+        "utilsScript": "utilsScript",
+        "intlTelInputGlobals": "intlTelInputGlobals",
+        "getInstance": "intlTelInputGlobals\\.getInstance|\\.getInstance\\(",
+        "initialCountry": "initialCountry",
+        "separateDialCode": "separateDialCode",
+        "preferredCountries": "preferredCountries",
+        "onlyCountries": "onlyCountries",
+        "nationalMode": "nationalMode",
+        "getNumber": "\\.getNumber\\(",
+        "isValidNumber": "\\.isValidNumber\\(",
+        "countrychange": "countrychange"
+      }
+    },
+    "flatpickr": {
+      "patterns": {
+        "altInput": "altInput",
+        "locale": "flatpickr\\.l10ns|locale\\s*:",
+        "mode": "mode\\s*:\\s*['\"](range|multiple|single)['\"]",
+        "enableTime": "enableTime",
+        "dateFormat": "dateFormat",
+        "onChange": "onChange\\s*:",
+        "setDate": "\\.setDate\\(",
+        "minDate": "minDate",
+        "maxDate": "maxDate"
+      }
+    },
+    "select2": {
+      "patterns": {
+        "dropdownParent": "dropdownParent",
+        "theme": "select2\\(\\s*\\{[^}]*theme",
+        "tags": "tags\\s*:\\s*true",
+        "select2:select": "select2:(select|unselect|open|close)",
+        "templateResult": "templateResult|templateSelection"
+      }
+    },
+    "bootstrap": {
+      "aliases": ["twitter-bootstrap"],
+      "patterns": {
+        "data-bs-*": { "pattern": "data-bs-[a-z-]+", "keywords": ["data-bs-"] },
+        "Modal": "bootstrap\\.Modal",
+        "Tooltip": "bootstrap\\.Tooltip",
+        "Dropdown": "bootstrap\\.Dropdown",
+        "Offcanvas": "bootstrap\\.Offcanvas",
+        "Toast": "bootstrap\\.Toast",
+        "Collapse": "bootstrap\\.Collapse",
+        "Popover": "bootstrap\\.Popover"
+      }
+    },
+    "chart.js": {
+      "aliases": ["chartjs"],
+      "patterns": {
+        "new Chart": "new\\s+Chart\\(",
+        "scales": "scales\\s*:",
+        "tooltips": "tooltips\\s*:",
+        "plugins": "plugins\\s*:\\s*\\{"
+      }
+    },
+    "sortablejs": {
+      "aliases": ["sortable"],
+      "patterns": {
+        "Sortable.create": "Sortable\\.create|new\\s+Sortable\\(",
+        "handle": "handle\\s*:",
+        "onEnd": "onEnd\\s*:"
+      }
+    }
+  }
+}

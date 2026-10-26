@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# stack-update — run the stack-updater pipeline (see ../README.md).
+# Usage: stack-update mode [report-only|apply-tier-a]  |  stack-update [<subcommand>] [--profile <dir>] [--mode report-only|apply-tier-a|propose] [--env test|prod] [--dry-run]
+set -euo pipefail
+# systemd units start without HOME; composer/npm/git need it (composer: "HOME or COMPOSER_HOME must be set").
+export HOME="${HOME:-/root}"
+DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+# `stack-update <subcommand> ...` passes through (e.g. `stack-update backup --component jq --dry-run`).
+case "${1:-}" in
+  update|inventory|policy|analyze|backup|verify|report|rollback|advisories|mode|approve|approvals|help) exec node "$DIR/../lib/cli.js" "$@" ;;
+esac
+exec node "$DIR/../lib/cli.js" update "$@"

@@ -1,0 +1,124 @@
+{
+ "notices": [
+  {
+   "id": "USN-8953-1",
+   "title": "OpenVPN vulnerability",
+   "summary": "OpenVPN could allow unintended access to network services.",
+   "published": "2026-10-22T15:38:41.388391",
+   "is_hidden": false,
+   "release_packages": {
+    "jammy": [
+     {
+      "name": "openvpn",
+      "version": "2.5.11-0ubuntu0.22.04.6",
+      "description": "virtual private network software",
+      "is_source": true
+     },
+     {
+      "name": "openvpn",
+      "version": "2.5.11-0ubuntu0.22.04.6",
+      "is_source": false,
+      "is_visible": true,
+      "source_link": "https://launchpad.net/ubuntu/+source/openvpn",
+      "version_link": "https://launchpad.net/ubuntu/+source/openvpn/2.5.11-0ubuntu0.22.04.6",
+      "pocket": "security"
+     }
+    ]
+   },
+   "type": "USN",
+   "cves": [
+    {
+     "id": "CVE-2026-84790",
+     "notices_ids": [
+      "USN-8953-1"
+     ]
+    }
+   ],
+   "cves_ids": [
+    "CVE-2026-84790"
+   ]
+  },
+  {
+   "id": "USN-8952-1",
+   "title": "Tornado vulnerabilities",
+   "summary": "Tornado could be made to crash or expose sensitive information if it\nreceived specially crafted network traffic.",
+   "published": "2026-10-22T12:07:23.683134",
+   "is_hidden": false,
+   "release_packages": {
+    "jammy": [
+     {
+      "name": "python-tornado",
+      "version": "6.1.0-3ubuntu0.1~esm6",
+      "description": "scalable, non-blocking web server and tools",
+      "is_source": true
+     },
+     {
+      "name": "python-tornado-doc",
+      "version": "6.1.0-3ubuntu0.1~esm6",
+      "is_source": false,
+      "is_visible": false,
+      "source_link": "https://launchpad.net/ubuntu/+source/python-tornado",
+      "version_link": null,
+      "pocket": "esm-apps"
+     },
+     {
+      "name": "python3-tornado",
+      "version": "6.1.0-3ubuntu0.1~esm6",
+      "is_source": false,
+      "is_visible": true,
+      "source_link": "https://launchpad.net/ubuntu/+source/python-tornado",
+      "version_link": null,
+      "pocket": "esm-apps"
+     }
+    ]
+   },
+   "type": "USN",
+   "cves": [
+    {
+     "id": "CVE-2026-103263",
+     "notices_ids": [
+      "USN-8952-1"
+     ]
+    },
+    {
+     "id": "CVE-2024-14029",
+     "notices_ids": [
+      "USN-8952-1"
+     ]
+    },
+    {
+     "id": "CVE-2023-54397",
+     "notices_ids": [
+      "USN-8952-1"
+     ]
+    },
+    {
+     "id": "CVE-2026-91992",
+     "notices_ids": [
+      "USN-8952-1"
+     ]
+    },
+    {
+     "id": "CVE-2026-91990",
+     "notices_ids": [
+      "USN-8952-1"
+     ]
+    },
+    {
+     "id": "CVE-2026-103262",
+     "notices_ids": [
+      "USN-8952-1"
+     ]
+    }
+   ],
+   "cves_ids": [
+    "CVE-2026-103263",
+    "CVE-2024-14029",
+    "CVE-2023-54397",
+    "CVE-2026-91992",
+    "CVE-2026-91990",
+    "CVE-2026-103262"
+   ]
+  }
+ ]
+}

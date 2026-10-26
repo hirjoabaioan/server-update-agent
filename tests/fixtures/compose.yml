@@ -1,0 +1,40 @@
+# Monitoring stack (example).
+# All services run with network_mode: host and listen ONLY on 127.0.0.1
+# (nothing public; Grafana is exposed through the reverse proxy: grafana.example.com -> 127.0.0.1:3000).
+# Secrets: /etc/monitoring/ (NOT in this folder).
+#
+# Porturi: grafana 3000 | loki 3121 (+grpc 9096) | prometheus 9090 | alertmanager 9093
+#          node-exporter 9100 | mysqld-exporter 9104 | blackbox 9115 | alloy 12345
+#
+# Do NOT run `docker compose down -v` (deletes history). Stop with: `docker compose down`.
+
+name: ifs-monitoring
+
+x-logging: &logging
+  driver: json-file
+  options: { max-size: "10m", max-file: "3" }
+
+services:
+  prometheus:
+    image: prom/prometheus:v3.4.1
+    container_name: mon-prometheus
+    restart: unless-stopped
+    network_mode: host
+    user: "65534:65534"
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=30d
+      - --web.listen-address=127.0.0.1:9090
+      - --web.enable-lifecycle
+    volumes:
+      - ./prometheus:/etc/prometheus:ro
+      - ./data/prometheus:/prometheus
+    logging: *logging
+
+  alertmanager:
+    image: prom/alertmanager:v0.28.1
+    container_name: mon-alertmanager
+    restart: unless-stopped
+    network_mode: host
+    user: "65534:65534"

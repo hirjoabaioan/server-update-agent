@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# stack-rollback — restore the backups taken by a run.
+# Usage: stack-rollback <run-id> [component] [--profile <dir>] [--env test|prod] [--dry-run] [--force]
+set -euo pipefail
+DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+if [ "$#" -lt 1 ] || [ "${1:-}" = "-h" ] || [ "${1:-}" = "--help" ]; then
+  echo "Usage: stack-rollback <run-id> [component] [--profile <dir>] [--env test|prod] [--dry-run] [--force]"
+  exit 2
+fi
+exec node "$DIR/../lib/cli.js" rollback "$@"

@@ -1,0 +1,3 @@
+prom/prometheus:v3.4.1|mon-prometheus
+grafana/loki:3.5.1|mon-loki
+deeperseeker-deeperseeker|deeperseeker

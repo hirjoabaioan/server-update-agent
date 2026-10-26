@@ -1,0 +1,38 @@
+nginx:
+  Installed: 1.31.3-1~jammy
+  Candidate: 1.31.8-1~jammy
+  Version table:
+     1.31.8-1~jammy 500
+        500 https://nginx.org/packages/mainline/ubuntu jammy/nginx amd64 Packages
+     1.31.7-1~jammy 500
+        500 https://nginx.org/packages/mainline/ubuntu jammy/nginx amd64 Packages
+     1.31.6-1~jammy 500
+        500 https://nginx.org/packages/mainline/ubuntu jammy/nginx amd64 Packages
+nodejs:
+  Installed: 22.23.2-1nodesource1
+  Candidate: 22.23.4-1nodesource1
+  Version table:
+     22.23.4-1nodesource1 600
+        500 https://deb.nodesource.com/node_22.x nodistro/main amd64 Packages
+     22.23.3-1nodesource1 600
+        500 https://deb.nodesource.com/node_22.x nodistro/main amd64 Packages
+ *** 22.23.2-1nodesource1 600
+        500 https://deb.nodesource.com/node_22.x nodistro/main amd64 Packages
+        100 /var/lib/dpkg/status
+php8.3-fpm:
+  Installed: 8.3.36-1+ubuntu22.04.1+deb.sury.org+1
+  Candidate: 8.3.36-1+ubuntu22.04.1+deb.sury.org+1
+  Version table:
+ *** 8.3.36-1+ubuntu22.04.1+deb.sury.org+1 500
+        500 https://ppa.launchpadcontent.net/ondrej/php/ubuntu jammy/main amd64 Packages
+        100 /var/lib/dpkg/status
+mariadb-server:
+  Installed: 1:11.4.12+maria~ubu2204
+  Candidate: 1:11.4.13+maria~ubu2204
+  Version table:
+     1:11.4.13+maria~ubu2204 500
+        500 https://dlm.mariadb.com/repo/mariadb-server/11.4/repo/ubuntu jammy/main amd64 Packages
+ *** 1:11.4.12+maria~ubu2204 100
+        100 /var/lib/dpkg/status
+     1:10.6.23-0ubuntu0.22.04.1 500
+        500 https://mirror.example.com/ubuntu/packages jammy-updates/universe amd64 Packages

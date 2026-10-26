@@ -1,0 +1,24 @@
+[
+ {
+  "cycle": "24.04",
+  "codename": "Noble Numbat",
+  "lts": true,
+  "releaseDate": "2024-04-25",
+  "eol": "2029-05-31",
+  "latest": "24.04.5",
+  "latestReleaseDate": "2026-09-10",
+  "support": "2029-05-31",
+  "extendedSupport": "2034-04-25"
+ },
+ {
+  "cycle": "22.04",
+  "codename": "Jammy Jellyfish",
+  "lts": true,
+  "releaseDate": "2022-04-21",
+  "eol": "2027-06-01",
+  "latest": "22.04.5",
+  "latestReleaseDate": "2024-09-12",
+  "support": "2024-09-30",
+  "extendedSupport": "2032-04-21"
+ }
+]

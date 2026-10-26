@@ -1,0 +1,14 @@
+# Saturday 22:00 UTC (the maintenance window is Sat 22:00-23:59 UTC).
+# Persistent=false: a missed Saturday must NOT fire at boot in the middle of the week.
+[Unit]
+Description=stack-updater weekly run, Saturday 22:00 UTC
+
+[Timer]
+OnCalendar=Sat *-*-* 22:00:00 UTC
+Persistent=false
+RandomizedDelaySec=0
+AccuracySec=1min
+Unit=stack-updater.service
+
+[Install]
+WantedBy=timers.target

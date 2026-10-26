@@ -1,0 +1,133 @@
+#!/usr/bin/env node
+'use strict';
+// stack-restore-bundle — restore a run bundle built by lib/backup/bundle.js.
+// Usage: stack-restore-bundle <run-id|bundle-path> [component] [--profile <dir>] [--dry-run] [--yes]
+//   1. verifies MANIFEST.sha256 (any mismatch => exit 1, nothing restored)
+//   2. debs/<dir>/      dpkg -i (policy-rc.d for php*), graceful reload, re-hold
+//   3. archives/*.tar.gz extracted to a staging dir, then `rsync -a --backup` into place
+//   4. reload: nginx -t && nginx -s reload, systemctl reload <profile.phpFpmService>
+//   app/, files/, db/ are listed as manual steps (never auto-restored).
+// [component] restricts to matching deb dirs (component name or dir prefix) or archive names.
+// Without --dry-run, --yes is required.
+const fs = require('fs');
+const path = require('path');
+const { spawnSync } = require('child_process');
+const LIB = path.join(__dirname, '..', 'lib');
+const bundleLib = require(path.join(LIB, 'backup', 'bundle.js'));
+const apt = require(path.join(LIB, 'backup', 'apt.js'));
+
+const USAGE = 'Usage: stack-restore-bundle <run-id|bundle-path> [component] [--profile <dir>] [--dry-run] [--yes]\n';
+
+function parse(argv) {
+  const o = { pos: [], dryRun: false, yes: false, profile: null };
+  for (let i = 0; i < argv.length; i++) {
+    const a = argv[i];
+    if (a === '--dry-run') o.dryRun = true;
+    else if (a === '--yes') o.yes = true;
+    else if (a === '--profile') o.profile = argv[++i];
+    else if (a.startsWith('--profile=')) o.profile = a.slice(10);
+    else if (a === '-h' || a === '--help') o.help = true;
+    else if (a.startsWith('--')) throw new Error(`unknown flag ${a}`);
+    else o.pos.push(a);
+  }
+  return o;
+}
+
+function loadProfile(flag) {
+  if (!flag && !process.env.STACK_UPDATER_PROFILE) return null;
+  return require(path.join(LIB, 'core', 'config.js')).loadConfig({ profile: flag });
+}
+
+function resolveBundle(ref, cfg) {
+  const cands = [ref, path.join(ref, 'bundle')];
+  if (cfg) cands.push(path.join(cfg.stateDir, 'runs', ref, 'bundle'));
+  for (const c of cands) if (fs.existsSync(path.join(c, 'MANIFEST.sha256'))) return path.resolve(c);
+  throw new Error(`no bundle (MANIFEST.sha256) found for "${ref}"${cfg ? '' : ' (pass --profile to resolve a run-id)'}`);
+}
+
+function run(cmd, args) {
+  const r = spawnSync(cmd, args, { encoding: 'utf8' });
+  if (r.status !== 0) throw new Error(`${cmd} ${args.join(' ')} failed (${r.status}): ${(r.stderr || r.stdout || '').trim().slice(0, 300)}`);
+  return r;
+}
+
+async function main(argv) {
+  let o;
+  try { o = parse(argv); } catch (e) { process.stderr.write(`${e.message}\n${USAGE}`); return 2; }
+  if (o.help || !o.pos.length) { process.stdout.write(USAGE); return o.help ? 0 : 2; }
+  const [ref, component] = o.pos;
+  let cfg = null;
+  try { cfg = loadProfile(o.profile); } catch (e) { process.stderr.write(`config error: ${e.message}\n`); return 2; }
+  const profile = (cfg && cfg.profile) || {};
+  let dir;
+  try { dir = resolveBundle(ref, cfg); } catch (e) { process.stderr.write(`${e.message}\n`); return 1; }
+  const say = (s) => process.stdout.write(`${s}\n`);
+
+  say(`bundle: ${dir}`);
+  const v = bundleLib.verifyManifest(dir);
+  if (!v.ok) { say(`MANIFEST.sha256: FAILED (${v.errors.length} errors)`); v.errors.forEach((e) => say(`  - ${e}`)); return 1; }
+  say(`MANIFEST.sha256: OK (${v.checked} files verified)`);
+  const map = JSON.parse(fs.readFileSync(path.join(dir, 'bundle.json'), 'utf8'));
+  const match = (name, extra = []) => !component || name === component || name.startsWith(`${component}-`) || extra.includes(component);
+  const debs = map.debs.filter((d) => match(path.basename(d.dir), [d.component]));
+  const archives = map.archives.filter((a) => !component || a.name === component);
+  if (component && !debs.length && !archives.length) { say(`nothing in the bundle matches "${component}"`); return 1; }
+  if (!o.dryRun && !o.yes) { say('refusing to restore without --yes (use --dry-run to list the steps)'); return 2; }
+
+  const ts = new Date().toISOString().replace(/[-:]/g, '').replace(/\..*/, '');
+  const suffix = `.pre-restore-${ts}`;
+  const executed = [];
+  const ctx = { profile, dryRun: o.dryRun, log: { info() {}, warn: (m) => say(`  warn: ${m}`), error: (m) => say(`  error: ${m}`) } };
+  let step = 0;
+
+  for (const d of debs) {
+    const full = path.join(dir, d.dir);
+    const m = apt.verifyManifest(full);
+    say(`[${++step}] debs ${d.dir}: ${m.packages.map((x) => `${x.package}=${x.version}`).join(', ')}`);
+    say(`    dpkg -i ${full}/*.deb  (class ${apt.groupClass(m.packages.map((x) => x.package))}; policy-rc.d for php; re-hold)`);
+    if (!o.dryRun) {
+      const r = await apt.restore({ artifact: full }, ctx);
+      say(`    ${r.ok ? 'OK' : 'FAILED'}: ${r.detail}`);
+      if (!r.ok) return 1;
+      executed.push(r.detail);
+    }
+  }
+
+  let reloadNeeded = false;
+  if (archives.length) {
+    const staging = path.join(path.dirname(dir), `restore-staging-${ts}`);
+    for (const a of archives) {
+      say(`[${++step}] archive ${a.file} -> staging ${staging}/${a.name}, then rsync --backup --suffix=${suffix}`);
+      const st = path.join(staging, a.name);
+      if (!o.dryRun) { fs.mkdirSync(st, { recursive: true }); run('tar', ['xzf', path.join(dir, a.file), '-C', st]); }
+      for (const { path: p, dir: isDir } of a.paths) {
+        const src = path.join(st, p.replace(/^\//, ''));
+        const args = ['-a', '--backup', `--suffix=${suffix}`, isDir ? `${src}/` : src, isDir ? `${p}/` : p];
+        say(`    rsync ${args.join(' ')}`);
+        if (!o.dryRun) { if (isDir) fs.mkdirSync(p, { recursive: true }); run('rsync', args); }
+      }
+      reloadNeeded = true;
+    }
+  }
+  if (reloadNeeded) {
+    say(`[${++step}] reload after config restore`);
+    const cmds = [['nginx', ['-t']], ['nginx', ['-s', 'reload']]];
+    if (profile.phpFpmService) cmds.push(['systemctl', ['reload', profile.phpFpmService]]);
+    else say('    (no profile.phpFpmService: php-fpm reload skipped — pass --profile)');
+    for (const [c, a] of cmds) {
+      say(`    ${c} ${a.join(' ')}`);
+      if (!o.dryRun) { run(c, a); executed.push(`${c} ${a.join(' ')}`); }
+    }
+    say('    note: /etc/mysql changes need a manual `systemctl restart mariadb` (not executed)');
+  }
+  if (!component) {
+    if (map.app) say(`[manual] app backups: ${map.app.file} (lockfiles, vendor/node_modules) — use stack-rollback for app components`);
+    for (const f of map.files) say(`[manual] file ${f.file} -> ${f.origin}`);
+    for (const f of map.db) say(`[manual] DB dump ${f.file} (restore with: gunzip -c <file> | mariadb <db>) — never automatic`);
+    say(`[info] state/dpkg-selections.txt, state/apt-mark-showhold.txt: package state at backup time`);
+  }
+  say(o.dryRun ? 'dry-run: nothing changed' : `done; executed:\n${executed.map((e) => `  - ${e}`).join('\n')}`);
+  return 0;
+}
+
+main(process.argv.slice(2)).then((c) => { process.exitCode = c; }, (e) => { process.stderr.write(`error: ${e.message}\n`); process.exitCode = 1; });

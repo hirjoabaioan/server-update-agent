@@ -1,0 +1,798 @@
+{
+  "items": [
+    {
+      "ecosystem": "eol",
+      "name": "nginx",
+      "installed": "1.31.3",
+      "candidates": [],
+      "source": "fixture",
+      "envs": [
+        "test",
+        "prod"
+      ],
+      "product": "nginx",
+      "eol": null,
+      "supportEnd": null,
+      "warnings": [],
+      "meta": {
+        "kind": "lifecycle",
+        "product": "nginx",
+        "cycle": "1.31",
+        "lts": false,
+        "latest": "1.31.8",
+        "latestReleaseDate": "2026-10-21"
+      }
+    },
+    {
+      "ecosystem": "apt",
+      "name": "nginx",
+      "installed": "1.31.3",
+      "candidates": [
+        {
+          "version": "1.31.8",
+          "releaseDate": "2026-10-21",
+          "source": "fixture",
+          "security": false,
+          "cvss": null,
+          "advisories": [],
+          "debVersion": "1.31.8-1~jammy"
+        },
+        {
+          "version": "1.31.7",
+          "releaseDate": "2026-10-14",
+          "source": "fixture",
+          "security": false,
+          "cvss": null,
+          "advisories": [],
+          "debVersion": "1.31.7-1~jammy"
+        }
+      ],
+      "source": "fixture",
+      "envs": [
+        "test",
+        "prod"
+      ],
+      "meta": {}
+    },
+    {
+      "ecosystem": "mariadb",
+      "name": "mariadb-server",
+      "installed": "11.4.12",
+      "candidates": [],
+      "source": "fixture",
+      "envs": [
+        "test",
+        "prod"
+      ],
+      "product": "mariadb",
+      "eol": "2029-05-29",
+      "supportEnd": null,
+      "warnings": [],
+      "meta": {
+        "kind": "lifecycle",
+        "product": "mariadb",
+        "cycle": "11.4",
+        "lts": true,
+        "eol": "2029-05-29",
+        "latest": "11.4.13",
+        "latestReleaseDate": "2026-08-24"
+      }
+    },
+    {
+      "ecosystem": "apt",
+      "name": "mariadb-server",
+      "installed": "11.4.12",
+      "candidates": [
+        {
+          "version": "11.4.13",
+          "releaseDate": "2026-08-22",
+          "source": "fixture",
+          "security": false,
+          "cvss": null,
+          "advisories": [],
+          "debVersion": "1:11.4.13+maria~ubu2204"
+        }
+      ],
+      "source": "fixture",
+      "envs": [
+        "test",
+        "prod"
+      ],
+      "meta": {}
+    },
+    {
+      "ecosystem": "apt",
+      "name": "mariadb-common",
+      "installed": "10.6.22",
+      "candidates": [
+        {
+          "version": "10.6.23",
+          "releaseDate": "2026-08-01",
+          "source": "fixture",
+          "security": false,
+          "cvss": null,
+          "advisories": []
+        }
+      ],
+      "source": "fixture",
+      "envs": [
+        "test",
+        "prod"
+      ],
+      "meta": {}
+    },
+    {
+      "ecosystem": "node-runtime",
+      "name": "nodejs",
+      "installed": "22.23.2",
+      "candidates": [],
+      "source": "fixture",
+      "envs": [
+        "test",
+        "prod"
+      ],
+      "product": "nodejs",
+      "eol": "2027-04-30",
+      "supportEnd": null,
+      "warnings": [],
+      "meta": {
+        "kind": "lifecycle",
+        "product": "nodejs",
+        "cycle": "22",
+        "lts": true,
+        "eol": "2027-04-30",
+        "latest": "22.23.4",
+        "latestReleaseDate": "2026-10-21"
+      }
+    },
+    {
+      "ecosystem": "php-runtime",
+      "name": "php",
+      "scope": "8.1",
+      "installed": "8.1.34",
+      "candidates": [],
+      "source": "fixture",
+      "envs": [
+        "test",
+        "prod"
+      ],
+      "product": "php",
+      "eol": "2025-12-31",
+      "supportEnd": null,
+      "warnings": [],
+      "meta": {
+        "kind": "lifecycle",
+        "product": "php",
+        "cycle": "8.1",
+        "lts": false,
+        "eol": "2025-12-31",
+        "latest": "8.1.34",
+        "latestReleaseDate": "2025-12-18"
+      }
+    },
+    {
+      "ecosystem": "php-runtime",
+      "name": "php",
+      "scope": "8.3",
+      "installed": "8.3.36",
+      "candidates": [],
+      "source": "fixture",
+      "envs": [
+        "test",
+        "prod"
+      ],
+      "product": "php",
+      "eol": "2027-12-31",
+      "supportEnd": null,
+      "warnings": [],
+      "meta": {
+        "kind": "lifecycle",
+        "product": "php",
+        "cycle": "8.3",
+        "lts": false,
+        "eol": "2027-12-31",
+        "latest": "8.3.36",
+        "latestReleaseDate": "2026-10-21",
+        "cycleReleaseDate": "2023-11-23"
+      }
+    },
+    {
+      "ecosystem": "php-runtime",
+      "name": "php",
+      "scope": "8.4",
+      "installed": "8.4.24",
+      "candidates": [],
+      "source": "fixture",
+      "envs": [
+        "test",
+        "prod"
+      ],
+      "product": "php",
+      "eol": "2028-12-31",
+      "supportEnd": null,
+      "warnings": [],
+      "meta": {
+        "kind": "lifecycle",
+        "product": "php",
+        "cycle": "8.4",
+        "lts": false,
+        "eol": "2028-12-31",
+        "latest": "8.4.27",
+        "latestReleaseDate": "2026-10-21",
+        "cycleReleaseDate": "2024-11-21"
+      }
+    },
+    {
+      "ecosystem": "php-runtime",
+      "name": "php",
+      "scope": "8.5",
+      "installed": "8.5.9",
+      "candidates": [],
+      "source": "fixture",
+      "envs": [
+        "test",
+        "prod"
+      ],
+      "product": "php",
+      "eol": "2029-12-31",
+      "supportEnd": null,
+      "warnings": [],
+      "meta": {
+        "kind": "lifecycle",
+        "product": "php",
+        "cycle": "8.5",
+        "lts": false,
+        "eol": "2029-12-31",
+        "latest": "8.5.12",
+        "latestReleaseDate": "2026-10-21",
+        "cycleReleaseDate": "2025-11-20"
+      }
+    },
+    {
+      "ecosystem": "apt",
+      "name": "php8.3-imap",
+      "installed": "8.3.36",
+      "candidates": [],
+      "source": "fixture",
+      "envs": [
+        "test",
+        "prod"
+      ],
+      "meta": {}
+    },
+    {
+      "ecosystem": "apt",
+      "name": "php8.4-imap",
+      "installed": "1.0.3",
+      "candidates": [],
+      "source": "fixture",
+      "envs": [
+        "test",
+        "prod"
+      ],
+      "meta": {}
+    },
+    {
+      "ecosystem": "apt",
+      "name": "php8.4-cli",
+      "installed": "8.4.24",
+      "candidates": [
+        {
+          "version": "8.4.27",
+          "releaseDate": "2026-10-21",
+          "source": "fixture",
+          "security": false,
+          "cvss": null,
+          "advisories": []
+        }
+      ],
+      "source": "fixture",
+      "envs": [
+        "test",
+        "prod"
+      ],
+      "meta": {}
+    },
+    {
+      "ecosystem": "composer",
+      "name": "(lockfile)",
+      "scope": "site.example",
+      "installed": "80 packages",
+      "candidates": [],
+      "source": "fixture",
+      "envs": [
+        "test"
+      ],
+      "meta": {
+        "kind": "lockfile-summary",
+        "platform": {
+          "require": ">=8.2",
+          "configPlatform": null,
+          "lockPlatform": null
+        }
+      }
+    },
+    {
+      "ecosystem": "os",
+      "name": "ubuntu-release",
+      "installed": "22.04",
+      "candidates": [],
+      "source": "fixture",
+      "envs": [
+        "test",
+        "prod"
+      ],
+      "product": "ubuntu",
+      "eol": "2027-06-01",
+      "supportEnd": null,
+      "warnings": [],
+      "meta": {
+        "kind": "lifecycle",
+        "product": "ubuntu",
+        "cycle": "22.04",
+        "lts": true,
+        "eol": "2027-06-01",
+        "latest": "22.04.5",
+        "latestReleaseDate": "2024-09-12"
+      }
+    },
+    {
+      "ecosystem": "vendor-js",
+      "name": "select2",
+      "scope": "assets/vendor",
+      "installed": "4.1.0-rc.0",
+      "candidates": [],
+      "source": "fixture",
+      "envs": [
+        "test",
+        "prod"
+      ],
+      "meta": {}
+    },
+    {
+      "ecosystem": "vendor-js",
+      "name": "sortablejs",
+      "scope": "assets/vendor",
+      "installed": "1.15.0",
+      "candidates": [
+        {
+          "version": "1.16.0-beta.1",
+          "releaseDate": "2026-08-01",
+          "source": "fixture",
+          "security": false,
+          "cvss": null,
+          "advisories": []
+        },
+        {
+          "version": "1.15.2",
+          "releaseDate": "2026-09-01",
+          "source": "fixture",
+          "security": false,
+          "cvss": null,
+          "advisories": []
+        }
+      ],
+      "source": "fixture",
+      "envs": [
+        "test",
+        "prod"
+      ],
+      "meta": {}
+    },
+    {
+      "ecosystem": "apt",
+      "name": "libexample1",
+      "installed": "1.2.3",
+      "candidates": [
+        {
+          "version": "1.2.4",
+          "releaseDate": "2026-10-21",
+          "source": "fixture",
+          "security": false,
+          "cvss": null,
+          "advisories": []
+        },
+        {
+          "version": "1.2.3",
+          "releaseDate": "2026-10-01",
+          "source": "fixture",
+          "security": false,
+          "cvss": null,
+          "advisories": [],
+          "rebuild": false
+        }
+      ],
+      "source": "fixture",
+      "envs": [
+        "test",
+        "prod"
+      ],
+      "meta": {}
+    },
+    {
+      "ecosystem": "usn",
+      "name": "libsec1",
+      "scope": "USN-9999-1",
+      "installed": "2.0.1",
+      "candidates": [
+        {
+          "version": "2.0.2",
+          "releaseDate": "2026-10-22",
+          "source": "fixture",
+          "security": true,
+          "cvss": 8.1,
+          "advisories": [
+            "USN-9999-1",
+            "CVE-2026-0001"
+          ]
+        }
+      ],
+      "source": "fixture",
+      "envs": [
+        "test",
+        "prod"
+      ],
+      "meta": {
+        "kind": "usn"
+      }
+    },
+    {
+      "ecosystem": "npm",
+      "name": "express",
+      "scope": "app-a",
+      "installed": "4.18.0",
+      "candidates": [
+        {
+          "version": "4.18.3",
+          "releaseDate": "2026-10-21",
+          "source": "fixture",
+          "security": false,
+          "cvss": null,
+          "advisories": []
+        },
+        {
+          "version": "4.18.2",
+          "releaseDate": "2026-09-20",
+          "source": "fixture",
+          "security": false,
+          "cvss": null,
+          "advisories": []
+        },
+        {
+          "version": "4.18.1",
+          "releaseDate": "2026-09-01",
+          "source": "fixture",
+          "security": false,
+          "cvss": null,
+          "advisories": []
+        }
+      ],
+      "source": "fixture",
+      "envs": [
+        "prod"
+      ],
+      "meta": {}
+    },
+    {
+      "ecosystem": "npm",
+      "name": "lodash",
+      "scope": "app-a",
+      "installed": "4.17.20",
+      "candidates": [
+        {
+          "version": "4.17.21",
+          "releaseDate": "2026-10-20",
+          "source": "fixture",
+          "security": true,
+          "cvss": null,
+          "advisories": [
+            "GHSA-xxxx"
+          ]
+        }
+      ],
+      "source": "fixture",
+      "envs": [
+        "prod"
+      ],
+      "meta": {}
+    },
+    {
+      "ecosystem": "npm",
+      "name": "luxon",
+      "scope": "app-a",
+      "installed": "3.4.0",
+      "candidates": [
+        {
+          "version": "3.5.0",
+          "releaseDate": "2026-08-01",
+          "source": "fixture",
+          "security": false,
+          "cvss": null,
+          "advisories": []
+        },
+        {
+          "version": "3.5.1",
+          "releaseDate": "2026-09-01",
+          "source": "fixture",
+          "security": false,
+          "cvss": null,
+          "advisories": []
+        },
+        {
+          "version": "4.0.0",
+          "releaseDate": "2026-10-15",
+          "source": "fixture",
+          "security": false,
+          "cvss": null,
+          "advisories": []
+        }
+      ],
+      "source": "fixture",
+      "envs": [
+        "prod"
+      ],
+      "meta": {}
+    },
+    {
+      "ecosystem": "npm",
+      "name": "zod",
+      "scope": "app-a",
+      "installed": "3.22.0",
+      "candidates": [
+        {
+          "version": "3.23.0",
+          "releaseDate": "2026-10-10",
+          "source": "fixture",
+          "security": false,
+          "cvss": null,
+          "advisories": []
+        }
+      ],
+      "source": "fixture",
+      "envs": [
+        "prod"
+      ],
+      "meta": {}
+    },
+    {
+      "ecosystem": "npm",
+      "name": "(app)",
+      "scope": "app-a",
+      "installed": "1.0.0",
+      "candidates": [],
+      "source": "fixture",
+      "envs": [
+        "prod"
+      ],
+      "meta": {
+        "kind": "app-summary",
+        "engines": {
+          "node": ">=18 <=22"
+        }
+      }
+    },
+    {
+      "ecosystem": "vendor-js",
+      "name": "bootstrap",
+      "scope": "assets/vendor",
+      "installed": "5.3.1",
+      "candidates": [
+        {
+          "version": "6.0.0",
+          "releaseDate": "2026-08-01",
+          "source": "fixture",
+          "security": false,
+          "cvss": null,
+          "advisories": []
+        },
+        {
+          "version": "6.0.1",
+          "releaseDate": "2026-09-01",
+          "source": "fixture",
+          "security": false,
+          "cvss": null,
+          "advisories": []
+        }
+      ],
+      "source": "fixture",
+      "envs": [
+        "test",
+        "prod"
+      ],
+      "meta": {}
+    },
+    {
+      "ecosystem": "vendor-js",
+      "name": "select2-bootstrap-5-theme",
+      "scope": "assets/vendor",
+      "installed": "1.3.0",
+      "candidates": [],
+      "source": "fixture",
+      "envs": [
+        "test",
+        "prod"
+      ],
+      "meta": {}
+    },
+    {
+      "ecosystem": "vendor-js",
+      "name": "flatpickr",
+      "scope": "assets/vendor",
+      "installed": "4.6.13",
+      "candidates": [
+        {
+          "version": "4.7.0",
+          "releaseDate": "2026-08-01",
+          "source": "fixture",
+          "security": false,
+          "cvss": null,
+          "advisories": []
+        },
+        {
+          "version": "4.7.1",
+          "releaseDate": "2026-09-01",
+          "source": "fixture",
+          "security": false,
+          "cvss": null,
+          "advisories": []
+        }
+      ],
+      "source": "fixture",
+      "envs": [
+        "test",
+        "prod"
+      ],
+      "meta": {}
+    },
+    {
+      "ecosystem": "vendor-js",
+      "name": "flatpickr-confirm",
+      "scope": "assets/vendor",
+      "installed": "4.6.13",
+      "candidates": [],
+      "source": "fixture",
+      "envs": [
+        "test",
+        "prod"
+      ],
+      "meta": {}
+    },
+    {
+      "ecosystem": "vendor-js",
+      "name": "intl-tel-input",
+      "scope": "assets/vendor",
+      "installed": "23.0.0",
+      "candidates": [
+        {
+          "version": "24.0.0",
+          "releaseDate": "2026-08-01",
+          "source": "fixture",
+          "security": false,
+          "cvss": null,
+          "advisories": []
+        },
+        {
+          "version": "24.0.1",
+          "releaseDate": "2026-09-01",
+          "source": "fixture",
+          "security": false,
+          "cvss": null,
+          "advisories": []
+        }
+      ],
+      "source": "fixture",
+      "envs": [
+        "test",
+        "prod"
+      ],
+      "meta": {}
+    },
+    {
+      "ecosystem": "docker",
+      "name": "prom/prometheus",
+      "installed": "v3.13.2",
+      "candidates": [
+        {
+          "version": "v3.14.0-rc.1",
+          "releaseDate": "2026-09-01",
+          "source": "fixture",
+          "security": false,
+          "cvss": null,
+          "advisories": [],
+          "tag": "v3.14.0-rc.1"
+        },
+        {
+          "version": "v3.14.0-alpine",
+          "releaseDate": "2026-08-18",
+          "source": "fixture",
+          "security": false,
+          "cvss": null,
+          "advisories": [],
+          "tag": "v3.14.0-alpine"
+        },
+        {
+          "version": "latest",
+          "releaseDate": "2026-10-21",
+          "source": "fixture",
+          "security": false,
+          "cvss": null,
+          "advisories": [],
+          "tag": "latest"
+        },
+        {
+          "version": "v3.13.5",
+          "releaseDate": "2026-10-21",
+          "source": "fixture",
+          "security": false,
+          "cvss": null,
+          "advisories": [],
+          "tag": "v3.13.5"
+        },
+        {
+          "version": "v3.13.4",
+          "releaseDate": "2026-09-29",
+          "source": "fixture",
+          "security": false,
+          "cvss": null,
+          "advisories": [],
+          "tag": "v3.13.4"
+        },
+        {
+          "version": "v3.13.3",
+          "releaseDate": "2026-09-07",
+          "source": "fixture",
+          "security": false,
+          "cvss": null,
+          "advisories": [],
+          "tag": "v3.13.3"
+        }
+      ],
+      "source": "fixture",
+      "envs": [
+        "prod"
+      ],
+      "meta": {}
+    },
+    {
+      "ecosystem": "frontend",
+      "name": "cdnRefs",
+      "installed": "3",
+      "candidates": [],
+      "source": "fixture",
+      "meta": {}
+    }
+  ],
+  "errors": [],
+  "nodeIndex": [
+    {
+      "version": "v22.23.4",
+      "date": "2026-10-21",
+      "lts": "Jod"
+    },
+    {
+      "version": "v22.0.0",
+      "date": "2024-04-24",
+      "lts": "Jod"
+    },
+    {
+      "version": "v24.0.0",
+      "date": "2025-05-06",
+      "lts": "Krypton"
+    },
+    {
+      "version": "v24.1.0",
+      "date": "2025-05-20",
+      "lts": "Krypton"
+    },
+    {
+      "version": "v25.0.0",
+      "date": "2025-10-15",
+      "lts": false
+    },
+    {
+      "version": "v25.1.0",
+      "date": "2025-11-01",
+      "lts": false
+    }
+  ]
+}

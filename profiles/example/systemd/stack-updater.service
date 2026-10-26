@@ -1,0 +1,22 @@
+# Weekly stack update run (installed by profiles/example/install.sh; started by stack-updater.timer).
+# Mode comes from /var/lib/stack-updater/config/mode (report-only | apply-tier-a; initial: report-only).
+# Change it with: stack-update mode <value> --profile /opt/server-update-agent/profiles/example
+# The run itself enforces: flock run lock, deploy locks (< 2h => skip), Sat 22:00-23:59 UTC window,
+# 3h whole-run timeout (TimeoutStartSec below is only the backstop), 20 min per verifier.
+[Unit]
+Description=stack-updater weekly run (inventory, policy, analyze, tier-A apply TEST then PROD, report)
+Documentation=file:///opt/server-update-agent/README.md
+Wants=network-online.target
+After=network-online.target mariadb.service nginx.service
+
+[Service]
+Type=oneshot
+Environment=STACK_UPDATER_MODE_FILE=/var/lib/stack-updater/config/mode
+ExecStart=/opt/server-update-agent/bin/stack-update update --profile /opt/server-update-agent/profiles/example
+Nice=10
+IOSchedulingClass=idle
+TimeoutStartSec=3h 10min
+KillMode=mixed
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=stack-updater

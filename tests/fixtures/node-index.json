@@ -1,0 +1,47 @@
+[
+ {
+  "version": "v26.12.1",
+  "date": "2026-10-21",
+  "lts": false
+ },
+ {
+  "version": "v26.12.0",
+  "date": "2026-10-14",
+  "lts": false
+ },
+ {
+  "version": "v24.11.1",
+  "date": "2025-11-11",
+  "lts": "Krypton"
+ },
+ {
+  "version": "v24.11.0",
+  "date": "2025-10-28",
+  "lts": "Krypton"
+ },
+ {
+  "version": "v22.23.4",
+  "date": "2026-10-20",
+  "lts": "Jod"
+ },
+ {
+  "version": "v22.23.3",
+  "date": "2026-09-23",
+  "lts": "Jod"
+ },
+ {
+  "version": "v22.23.2",
+  "date": "2026-07-28",
+  "lts": "Jod"
+ },
+ {
+  "version": "v22.23.1",
+  "date": "2026-06-22",
+  "lts": "Jod"
+ },
+ {
+  "version": "v22.23.0",
+  "date": "2026-06-17",
+  "lts": "Jod"
+ }
+]

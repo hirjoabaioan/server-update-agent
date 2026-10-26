@@ -1,0 +1,348 @@
+{
+  "$comment": "Example site adapter. All site facts live here; the core (lib/, bin/) stays server-agnostic. Relative paths resolve against `repo`. Every value is fictional: copy this directory to profiles/<yours>/ and edit.",
+  "name": "example",
+  "stateDir": "/var/lib/stack-updater",
+  "pkgRollbackDir": "/var/lib/stack-updater/pkg-rollback",
+  "repo": "/srv/www/example-repo",
+  "branch": "main",
+  "syncScript": "/usr/local/bin/sync-repo-to-web.sh",
+  "webRoots": [
+    {
+      "domain": "test.example.com",
+      "env": "test",
+      "path": "/srv/www/test.example.com",
+      "repoPath": "sites/test.example.com",
+      "url": "https://test.example.com"
+    },
+    {
+      "domain": "test.example.org",
+      "env": "test",
+      "path": "/srv/www/test.example.org",
+      "repoPath": "sites/test.example.org",
+      "url": "https://test.example.org"
+    },
+    {
+      "domain": "example.com",
+      "env": "prod",
+      "path": "/srv/www/example.com",
+      "repoPath": "sites/example.com",
+      "url": "https://example.com"
+    },
+    {
+      "domain": "example.org",
+      "env": "prod",
+      "path": "/srv/www/example.org",
+      "repoPath": "sites/example.org",
+      "url": "https://example.org"
+    }
+  ],
+  "excluded": [
+    {
+      "domain": "legacy.example.com",
+      "path": "/srv/www/legacy.example.com",
+      "reason": "not in the repo, returns 404"
+    }
+  ],
+  "phpFpmService": "php8.3-fpm",
+  "nginxJsonLogDir": "/var/log/nginx/domains",
+  "phpErrorLogs": {
+    "prod": "/srv/www/example.com/logs/php-fatal.log",
+    "test": "/srv/www/test.example.com/logs/php_error.log",
+    "poolConfDir": "/etc/php/8.3/fpm/pool.d"
+  },
+  "npmApps": [
+    {
+      "path": "apps/api",
+      "runtimePath": "/srv/apps/api",
+      "owner": "deploy",
+      "pm2Name": "api",
+      "pm2User": "deploy",
+      "healthUrl": "http://127.0.0.1:3101/health"
+    },
+    {
+      "path": "apps/worker",
+      "runtimePath": "/srv/apps/worker",
+      "owner": "deploy",
+      "pm2Name": "worker",
+      "pm2User": "root",
+      "healthUrl": null
+    },
+    {
+      "path": "apps/static-tool",
+      "runtimePath": "/srv/apps/static-tool",
+      "owner": "deploy",
+      "pm2Name": null,
+      "pm2User": null,
+      "healthUrl": null
+    }
+  ],
+  "aptComponentGroups": [
+    {
+      "group": "php8.3",
+      "patterns": [
+        "php8.3",
+        "php8.3-*"
+      ],
+      "dates": "php"
+    },
+    {
+      "group": "php-sidebyside",
+      "patterns": [
+        "php8.4",
+        "php8.4-*",
+        "php8.5",
+        "php8.5-*"
+      ],
+      "dates": "php"
+    },
+    {
+      "group": "nginx",
+      "patterns": [
+        "nginx",
+        "nginx-*",
+        "libnginx-*"
+      ],
+      "dates": "nginx"
+    },
+    {
+      "group": "mariadb",
+      "patterns": [
+        "mariadb-server",
+        "mariadb-client",
+        "mariadb-client-*",
+        "mariadb-server-*",
+        "mariadb-common",
+        "libmariadb*"
+      ],
+      "dates": "mariadb"
+    },
+    {
+      "group": "nodejs",
+      "patterns": [
+        "nodejs"
+      ],
+      "dates": "nodejs"
+    },
+    {
+      "group": "docker",
+      "patterns": [
+        "docker-ce",
+        "docker-ce-*",
+        "docker-buildx-plugin",
+        "docker-compose-plugin",
+        "containerd.io"
+      ]
+    }
+  ],
+  "dockerCompose": "infra/monitoring/docker-compose.yml",
+  "dockerComposeLive": "/opt/monitoring/docker-compose.yml",
+  "backupDbScript": "/usr/local/bin/backup-db.sh",
+  "backupTargets": [
+    {
+      "name": "s3",
+      "script": "adapters/s3-upload.sh",
+      "remote": "s3remote:example-bucket/stack-updates"
+    }
+  ],
+  "bundle": {
+    "$comment": "Extra bundle content (lib/backup/bundle.js). The core adds the 'etc' archive (nginx, php, mysql, systemd units, apt sources/preferences) by default. files[] = repo-relative, included if present.",
+    "archives": [
+      {
+        "name": "web-conf",
+        "paths": [
+          "/etc/nginx/conf.d",
+          "/etc/nginx/sites-enabled"
+        ]
+      }
+    ],
+    "files": [
+      "sites/test.example.com/public_html/assets/vendor/manifest.json"
+    ],
+    "dbDumpDir": "/var/backups/db"
+  },
+  "notify": {
+    "$comment": "type selects adapters/notify-<type>.sh. The token is read from tokenFile/envFile at send time and never copied. chatId is not a secret.",
+    "type": "telegram",
+    "tokenFile": "/etc/stack-updater/telegram_token",
+    "envFile": "/etc/stack-updater/telegram.env",
+    "chatId": "123456789"
+  },
+  "deployLocks": [
+    "/tmp/deploy.lock",
+    "/var/lib/stack-updater/deploy.lock"
+  ],
+  "maintenanceWindow": {
+    "dow": 6,
+    "hour": 22,
+    "tz": "UTC"
+  },
+  "reportDir": "reports/stack-updates",
+  "frontend": {
+    "manifest": "sites/test.example.com/public_html/assets/vendor/manifest.json"
+  },
+  "cronSmoke": [
+    {
+      "name": "mail_queue",
+      "base": "web",
+      "rel": "public_html/cron/mail_queue.php",
+      "envs": [
+        "test",
+        "prod"
+      ]
+    },
+    {
+      "name": "cleanup",
+      "base": "web",
+      "rel": "public_html/cron/cleanup.php",
+      "envs": [
+        "test",
+        "prod"
+      ],
+      "dryFlag": "--dry-run"
+    }
+  ],
+  "securityWatch": {
+    "enabled": false,
+    "hook": null
+  },
+  "analyst": {
+    "$comment": "Optional LLM summaries. Any OpenAI-compatible endpoint; remove llmUrl/llmEnvFile to disable. llmEnvFile holds <llmKeyVar>=<key>. anthropicEnvFile enables the tier-B fallback (ANTHROPIC_API_KEY).",
+    "llmUrl": "http://127.0.0.1:8011",
+    "llmEnvFile": "/etc/stack-updater/llm.env",
+    "llmKeyVar": "LLM_API_KEY",
+    "llmModel": "your-model-name",
+    "anthropicEnvFile": "/etc/stack-updater/anthropic.env",
+    "summaryLanguage": "English",
+    "phpcsBin": "/usr/local/bin/phpcs",
+    "patternsFile": "analyst-patterns.json"
+  },
+  "plugins": {},
+  "adapterScripts": {
+    "$comment": "Approval adapters (approval.adapter = name): JS plugin plugins/adapters/<name>.js (+ plugins/backup/<name>.js for backup/restore) runs this script.",
+    "nginx-channel-stable": "adapters/nginx-channel-stable.sh"
+  },
+  "smokeUrls": [
+    {
+      "url": "https://test.example.com/",
+      "env": "test"
+    },
+    {
+      "url": "https://test.example.org/",
+      "env": "test"
+    },
+    {
+      "url": "https://example.com/",
+      "env": "prod"
+    },
+    {
+      "url": "https://example.org/",
+      "env": "prod"
+    },
+    {
+      "url": "https://admin.example.com/",
+      "env": "prod",
+      "expect": [
+        302,
+        200
+      ]
+    },
+    {
+      "url": "https://storage.example.org/",
+      "env": "prod",
+      "expect": 403
+    }
+  ],
+  "smokeUrlsNotProbed": {
+    "internal.example.com": "no response from the host itself, internal-only"
+  },
+  "verifiers": [
+    {
+      "name": "http-smoke",
+      "envs": [
+        "test",
+        "prod"
+      ]
+    },
+    {
+      "name": "log-diff",
+      "envs": [
+        "test",
+        "prod"
+      ]
+    },
+    {
+      "name": "nginx-5xx",
+      "envs": [
+        "test",
+        "prod"
+      ],
+      "watchMinutes": {
+        "prod": 15,
+        "test": 3
+      },
+      "maxPercent": 0.5,
+      "maxAbsolute": 5
+    },
+    {
+      "name": "command",
+      "id": "nginx -t",
+      "cmd": "nginx",
+      "args": [
+        "-t"
+      ],
+      "envs": [
+        "test"
+      ]
+    },
+    {
+      "name": "command",
+      "id": "php-fpm8.3 -t",
+      "cmd": "php-fpm8.3",
+      "args": [
+        "-t"
+      ],
+      "envs": [
+        "test"
+      ]
+    },
+    {
+      "name": "external-hook",
+      "id": "cron-smoke",
+      "script": "/opt/server-update-agent/profiles/example/verify/cron-smoke.sh",
+      "envs": [
+        "test"
+      ],
+      "timeoutMs": 300000
+    },
+    {
+      "name": "external-hook",
+      "id": "services-health",
+      "script": "/opt/server-update-agent/profiles/example/verify/services-health.sh",
+      "envs": [
+        "test"
+      ],
+      "timeoutMs": 180000
+    }
+  ],
+  "services": [
+    {
+      "name": "api",
+      "url": "http://127.0.0.1:3101",
+      "probePath": "/health"
+    },
+    {
+      "name": "worker",
+      "url": "http://127.0.0.1:3102",
+      "probePath": "/",
+      "probe": "any"
+    }
+  ],
+  "appBackup": {
+    "$comment": "lib/backup/{composer,npm,frontend,mariadb}.js. keepPrev = max vendor|node_modules.prev-<run> dirs per root. snapshotConfirmFlag: mariadb minor/major apply needs --<flag> (the operator takes a VM/disk snapshot by hand first).",
+    "keepPrev": 2,
+    "phpCli": "php8.3",
+    "pm2RestartScript": "adapters/pm2-restart.sh",
+    "mariadbTestDb": "example_test",
+    "snapshotConfirmFlag": "snapshot-confirmed"
+  }
+}

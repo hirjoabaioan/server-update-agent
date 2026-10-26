@@ -1,0 +1,47 @@
+{
+  "$comment": "Update policy consumed by policy plugins + core safety rails (lib/cli.js applyCoreRails). Site profiles may override keys via profile.policyOverrides.",
+  "version": 1,
+  "stableChannelsOnly": true,
+  "forbidPrerelease": "(alpha|beta|rc|dev|nightly|preview|snapshot)",
+  "nodeLtsOnly": true,
+  "mariadbLtsOnly": true,
+  "mariadbLtsSeries": ["11.4", "11.8"],
+  "dockerNeverLatest": true,
+  "patchSoakDays": 7,
+  "securitySkipSoak": {
+    "enabled": true,
+    "minCvss": 7.0,
+    "$comment": "A security candidate with cvss >= minCvss skips patchSoakDays (tier A only)."
+  },
+  "minorMajorMinAgeDays": 30,
+  "requiresFollowUpPatch": {
+    "enabled": true,
+    "$comment": "A new minor/major line is only eligible once a follow-up patch exists. Default: x.y.1+; overrides per component.",
+    "defaultMinPatch": 1,
+    "components": {
+      "php": { "minPatch": 2, "comment": "PHP x.y.0/x.y.1 historically ship regressions; require x.y.2+" }
+    }
+  },
+  "tiers": {
+    "A": { "description": "patch within the current minor (same major.minor)", "auto": true },
+    "B": { "description": "minor / major bump or runtime switch (e.g. PHP 8.3 -> 8.4, Node 22 -> 24)", "auto": false },
+    "C": { "description": "operating system release upgrade", "auto": false }
+  },
+  "pins": {
+    "select2": {
+      "allow": ["4.1.0-rc.0"],
+      "comment": "de-facto final release of select2; rc rule intentionally bypassed"
+    }
+  },
+  "compat": {
+    "$comment": "Tier-B compatibility pre-check tables (lib/policy/rules/compat.js).",
+    "puppeteerMinNode": { "21": 16, "22": 18, "23": 18, "24": 18 }
+  },
+  "nginx": {
+    "channel": "stable",
+    "$comment": "nginx.org release channel (policy: latest stable and compatible). stable = even minor; mainline (odd minor) candidates are never proposed. An installed mainline build yields a tier-B 'channel-switch' to the newest soaked stable build (patchSoakDays), applied only via an approval naming a profile adapter. Optional stableIndexUrl overrides the derived stable Packages index URL."
+  },
+  "knownRegressions": {},
+  "componentsNeverAuto": ["ubuntu-release"],
+  "deployLockMaxAgeMinutes": 120
+}

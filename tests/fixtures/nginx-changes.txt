@@ -1,0 +1,4 @@
+Changes with nginx 1.31.8                                        21 Oct 2026
+Changes with nginx 1.31.7                                        14 Oct 2026
+Changes with nginx 1.31.6                                        15 Sep 2026
+Changes with nginx 1.31.5                                        02 Sep 2026

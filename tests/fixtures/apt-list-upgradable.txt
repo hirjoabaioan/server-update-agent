@@ -1,0 +1,8 @@
+Listing...
+docker-ce/jammy 5:29.9.2-1~ubuntu.22.04~jammy amd64 [upgradable from: 5:29.9.0-1~ubuntu.22.04~jammy]
+panel-php/jammy 8.5.12-1+ubuntu22.04 amd64 [upgradable from: 8.5.9-1+ubuntu22.04]
+libkrb5-3/jammy-updates 1.19.2-2ubuntu0.10 amd64 [upgradable from: 1.19.2-2ubuntu0.8]
+mariadb-server/jammy 1:11.4.13+maria~ubu2204 amd64 [upgradable from: 1:11.4.12+maria~ubu2204]
+nginx/stable 1.31.8-1~jammy amd64 [upgradable from: 1.31.3-1~jammy]
+nodejs/nodistro 22.23.4-1nodesource1 amd64 [upgradable from: 22.23.2-1nodesource1]
+php8.5-cli/jammy 8.5.12-1+ubuntu22.04.1+deb.sury.org+1 amd64 [upgradable from: 8.5.9-1+ubuntu22.04.1+deb.sury.org+1]

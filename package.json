@@ -1,0 +1,14 @@
+{
+  "name": "server-update-agent",
+  "version": "0.1.0",
+  "description": "Weekly, policy-driven server update runner with soak periods, backups, staged TEST/PROD rollout and auto-rollback.",
+  "license": "MIT",
+  "type": "commonjs",
+  "engines": { "node": ">=22" },
+  "bin": {
+    "stack-update": "bin/stack-update",
+    "stack-rollback": "bin/stack-rollback",
+    "stack-restore-bundle": "bin/stack-restore-bundle"
+  },
+  "scripts": { "test": "node --test tests/" }
+}
